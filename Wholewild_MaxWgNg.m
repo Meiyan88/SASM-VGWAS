@@ -23,7 +23,7 @@ D(D(:)<0)=0;
 tt4=U*(D^(1/2))*U';
 tt4=real(tt4);
 
-P=eerorr.^2;%%%%n*V
+P=eerorr.^2;%n*V
 
 Wgmax=zeros(G,1);
 roinum=1;
@@ -36,17 +36,17 @@ rng('seed',sum(100*clock));
 for i=1:G
     eta=(rand(size(eerorr,1),1)>0.5)*2-1;
     eta1=diag(eta);
-    t2=sum((QQ*eta1*tt4).^2,2);%%%%C*1
-    Wg=tt1.*t2./length(deta);%%%%C*1
+    t2=sum((QQ*eta1*tt4).^2,2);%C*1
+    Wg=tt1.*t2./length(deta);%C*1
     [~,indx]=sort(Wg,'descend');
     SNP=ZZ(:,indx(1:N0));
        
     Q=SNP'*E1;
     temp=Q.^2;
-    t1=temp*P;%%%%%%c*V
+    t1=temp*P;%c*V
     t1=t1.^(-1);
     t2=Q*(eerorr.*repmat(eta,[1,size(eerorr,2)]));
-    temp=t1.*(t2.^2);%%%%N0*V
+    temp=t1.*(t2.^2);%N0*V
     Wgmax(i)=max(temp(:));
 
     if Flag
