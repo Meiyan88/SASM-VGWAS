@@ -17,25 +17,22 @@ t2=(Q*YW).^2;%c*V
 deta=deta(:);
 deta=deta';
 t4=repmat(deta,[N0,1]);
-W=t3*t2.*t4;%%%%%%C*V, real data's statistics
+W=t3*t2.*t4;%C*V, real data's statistics
 
-%%%%%%%%%%%%%%%association of voxels and SNPs
-%%%%%%%%%%%real data statistic%%%%%
-%%%%corrected pv
+%association of voxels and SNPs
+%real data statistic
+%corrected pv
 k1=mean(Wgmax);
 k2=var(Wgmax);
 k3=mean((Wgmax-k1).^3);
 a=k3/(4*k2);
 b=k1-2*k2^2/k3;
 d=8*k2^3/k3^2;
-pcorrect=1-cdf('chi2',(W-b)/a,d);%%%%%corrected pv
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+pcorrect=1-cdf('chi2',(W-b)/a,d);%corrected pv
 
 vv=size(PX,1)-size(X,2);
-rawpvalue=1-cdf('f',W,1,vv);%%%%%raw pvalue
+rawpvalue=1-cdf('f',W,1,vv);%raw pvalue
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if Flag
     thred=0.005;
     alph=finv(1-thred,1,vv);
