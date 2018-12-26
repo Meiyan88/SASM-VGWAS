@@ -6,7 +6,7 @@ function [pp, W]=globalWald(SNP,YW,PX,deta,Flag_Z)
 E3=eye(size(PX,1))-PX;
 E4=YW*(repmat(deta,[1,size(YW,1)]).*YW');
 if Flag_Z
-    c=size(SNP,2)/2;%%%%%%%number of SNPs
+    c=size(SNP,2)/2;%number of SNPs
     t1=E3*E4*E3;
     j=1;
     W=zeros(c,1);
@@ -25,7 +25,7 @@ else
     D(D(:)<0)=0;
     t4=U*(D^(1/2))*U';
     t4=real(t4);
-    t2=sum((Q*t4).^2,2);%%%%%%C*1
+    t2=sum((Q*t4).^2,2);%C*1
     W=t1.*t2;
 end
 W=W./length(deta);
