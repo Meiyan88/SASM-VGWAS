@@ -15,12 +15,12 @@
 
 function [pv,Cluster,rawpvalue]=FVGWAS(Y,SNP,X,index,sizeimg,N0,Flag_S)
 
-lamda=0.001;%%%%%
+lamda=0.001;
 PX=X/(X'*X+lamda*eye(size(X,2)))*X';
-n=size(X,1);%%%%%number of individual
-p=size(X,2);%%%%feature dimention of X
+n=size(X,1);%number of individual
+p=size(X,2);%feature dimention of X
 
-%%%%%%%%%%%%%%step 1: Get points and voxels
+%step 1: Get points and voxels
 BatchSize=5000;
 deta=zeros(size(Y,2),1);
 if length(index)>BatchSize
@@ -40,8 +40,7 @@ end
 deta(deta(:)~=0)=deta(deta(:)~=0).^(-1);
 
 
-%%%%%%%%%step 2: exclude SNPs with MAF values smaller than 0.05. Remaining missing genotype variables were
-%%%%%imputed as the modal value
+%step 2: exclude SNPs with MAF values smaller than 0.05. Remaining missing genotype variables were imputed as the modal value
 if Flag_S
     num=zeros(3,size(SNP,2));
     for i=1:3
@@ -55,8 +54,7 @@ if Flag_S
     for i=1:length(r)
         SNP(r(i),c(i))=maxnum(c(i));
     end
-    %%%%%%%%%%%%%%
-    minMAF=0.05;%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    minMAF=0.05;
     MAF=sum(SNP)/(2*n);
     temp=find(MAF>0.5);
     MAF(temp)=1-MAF(temp);
@@ -64,16 +62,15 @@ if Flag_S
     SNP(:,SNP_index)=[];
 end
 
-% % %%%%%step 3: use the chi-squared approximation to the observed W(c) to calculate the p-values
+% step 3: use the chi-squared approximation to the observed W(c) to calculate the p-values
 tic
 [pp, ~]=globalWald(SNP,Y,PX,deta);
 fprintf('GSIS: %f\n',toc)
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 G=1000;
 
-%%%%%%step 4: generate bootstrap samples
+%step 4: generate bootstrap samples
 tic
 [Wgmax,Ngmax]=Wholewild_MaxWgNg(N0,X,PX,Y,deta,SNP,G,index,sizeimg);
 fprintf('Generate bootstrap samples: %f\n',toc)
@@ -82,7 +79,7 @@ fprintf('Generate bootstrap samples: %f\n',toc)
 [~,indx]=sort(pp,'descend');
 SNPtemp=SNP(:,indx(1:N0));
 
-%%%%%%step 5: detect significant locus-voxel and locus-cluster pairs
+%step 5: detect significant locus-voxel and locus-cluster pairs
 tic
 [pv,Cluster,rawpvalue]=Genvoxclusnp_New(N0,PX,X,Y,SNPtemp,Wgmax,Ngmax,deta,index,sizeimg);
 
