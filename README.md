@@ -4,4 +4,4 @@ This is a matlab package for incorporating spatial-anatomical similarity into th
 
 Associated paper: 
 [1] Huang, M., et al. (2015) FVGWAS: Fast voxelwise genome wide association analysis of large-scale imaging genetic data, Neuroimage, 118, 613-627.
-[2] Huang, M., et al. Incorporating spatial–anatomical similarity into the VGWAS framework for AD biomarker detection.
+[2] Huang, M., et al. Incorporating spatial–anatomical similarity into the VGWAS framework for AD biomarker detection. Bioinformatics, 2020.
